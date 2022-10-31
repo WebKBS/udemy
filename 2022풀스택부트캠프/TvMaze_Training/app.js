@@ -6,6 +6,11 @@ form.addEventListener('submit', async function (e) {
 
   const searchTerm = form.elements.query.value; // 인풋 값
 
+  // 아무 내용이 없다면 실행 중지
+  if (searchTerm === '') {
+    return false;
+  }
+
   // 요청 처리
   const config = { params: { q: searchTerm } };
   const res = await axios.get(`https://api.tvmaze.com/search/shows`, config);
