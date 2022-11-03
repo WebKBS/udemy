@@ -1,0 +1,26 @@
+Node 공부
+
+node REPL (Read-Eval-Print Loop)
+
+사용자의 입력을 취하고 이를 평가(실행)하고 사용자에게 반환시키는 환경을 말한다.
+ex: 콘솔기능, 터미널에서 node를 실행시키면, 1 + 1 = 2 같은 계산식을 사용할 수 있다.
+
+
+*노드는 문서객체 모델이 없다.
+window, document 사용 불가.
+
+- window 대신에 global이 있다.
+
+
+*모듈 가져오기 및 내보내기는 객체로 되어있다.
+
+--- 모듈 가져오기
+const 변수 = require('./모듈파일이름');
+
+--- 모듈 내보내기
+module.exports = 값 또는 문자열
+
+// 내보내기
+module.exports.add = add;
+// 가져오기
+변수.add(값, 값);
