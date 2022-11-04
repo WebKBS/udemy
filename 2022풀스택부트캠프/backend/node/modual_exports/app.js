@@ -11,3 +11,6 @@ console.log(math.asqar(3));
 
 // 객체로 가져오기
 console.log(math.sqare(9));
+
+const cats = require('../shelter');
+console.log('require', cats);
