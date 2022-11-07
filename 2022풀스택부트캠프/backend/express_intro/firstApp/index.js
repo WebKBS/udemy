@@ -63,6 +63,17 @@ app.get('/r/:subreddit/:postId', (req, res) => {
   res.send(`<h1>Viewing Post Id: ${postId} the: ${subreddit}</h1>`);
 });
 
+/* 쿼리 스트링 사용해보기 */
+app.get('/search', (req, res) => {
+  const { q } = req.query;
+  if (!q) {
+    res.send(`<h1 style="color: red">Missing Path: ${q}</h1>`);
+  } else {
+    res.send(`<h1>Search results for: ${q}</h1>`);
+  }
+  console.log(req.query);
+});
+
 // 잘못된 path 경로 일때
 app.get('*', (req, res) => {
   res.send(`I don't know path`);

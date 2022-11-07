@@ -1,5 +1,6 @@
-send() 메서드는 Http 요청을 받아와서
+send() 메서드는 Http get 요청을 받아와서
 한 페이지에 하나만 사용해야한다. 여러개 사용할수 없다.
+get 메서드 안에서 단 하나의 send만 사용.
 
 
 get()메서드
@@ -13,3 +14,18 @@ get('주소', (request, response) => {
 app.get('*', (req, res) => {
   res.send('메세지');
 });
+
+
+쿼리 스트링 사용하기
+url에서 주소/search?q=abcd
+또는 추가 적인 쿼리로 /search?q=abcd&color=blue
+&를 사용해서 추가로 사용할 수 있다.
+app.get('/search', (req, res) => {
+  const { q } = req.query; //requset에서 쿼리를 가져옴
+  if (!q) { //쿼리가 아닐때
+    res.send(`<h1 style="color: red">Missing Path: ${q}</h1>`);
+  } else { 
+    res.send(`<h1>Search results for: ${q}</h1>`);
+  }
+  console.log(req.query);
+})
