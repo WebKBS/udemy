@@ -29,3 +29,8 @@ app.get('/search', (req, res) => {
   }
   console.log(req.query);
 })
+
+
+NodeMon 사용하기 - node를 자동으로 재시작해준다.
+ 설치 - npm i -g nodemon
+ 실행 nodemon index.js
