@@ -1,1 +1,4 @@
-app
+REPL (read eval print loop)
+- 콘솔하면에서 바로 결과를 보여주는것을 말한다.
+ex) node 실행후
+1 + 1을 하면 바로 결과값 2가 출력되는것.
