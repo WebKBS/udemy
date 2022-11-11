@@ -1,7 +1,12 @@
+debugger;
 const express = require('express');
 const app = express();
 const path = require('path');
 const redditData = require('./data.json');
+
+//미들웨어 사용해보기
+//app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public'))); // 미들웨어 경로 지정
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
