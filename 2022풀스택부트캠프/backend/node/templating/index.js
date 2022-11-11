@@ -18,7 +18,11 @@ app.get('/cats', (req, res) => {
 app.get('/r/:subreddit', (req, res) => {
   const { subreddit } = req.params;
   const data = redditData[subreddit];
-  res.render('subreddit', { ...data });
+  if (data) {
+    res.render('subreddit', { ...data });
+  } else {
+    res.render('notfound', { subreddit }); // 사이트 주소가 틀릴 때
+  }
 });
 
 app.get('/random', (req, res) => {
