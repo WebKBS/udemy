@@ -47,7 +47,8 @@ app.post("/comments", (req, res) => {
   //console.log(req.body);
   const { username, comment } = req.body;
   comments.push({ username, comment });
-  res.send("IT Work");
+  //res.send("IT Work"); // 이 상태로 전송했을때 새로고침을 하면 다시 post가 재 전송되서 중복이된다. redirect를 사용하자
+  res.redirect("/comments"); // 데이터를 전송하고 지정한 path로 이동한다. 302
 });
 
 ///////
