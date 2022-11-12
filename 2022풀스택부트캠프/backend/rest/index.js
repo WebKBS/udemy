@@ -35,10 +35,22 @@ app.get("/comments", (req, res) => {
   res.render("comments/index", { comments });
 });
 
+app.get("/comments/new", (req, res) => {
+  res.render("comments/new");
+});
+
 app.get("/tacos", (req, res) => {
   res.send("Get /tacos response");
 });
 
+app.post("/comments", (req, res) => {
+  //console.log(req.body);
+  const { username, comment } = req.body;
+  comments.push({ username, comment });
+  res.send("IT Work");
+});
+
+///////
 app.post("/tacos", (req, res) => {
   const { meat, qty } = req.body;
   res.send(`Ok, ${qty}, ${meat}`);
