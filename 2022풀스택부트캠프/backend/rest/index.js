@@ -62,6 +62,17 @@ app.get("/comments/:id", (req, res) => {
   res.render("comments/show", { comment });
 });
 
+app.patch("/comments/:id", (req, res) => {
+  // patch와 put의 다른점은 patch는 개별로 변경할때 사용, put은 전체를 변경헐때 사용.
+  // patch에만 페이로드가 적용된다.
+  const { id } = req.params;
+  //const comment = comments.find((c) => c.id === id);
+  const newCommentText = req.body.comment;
+  const foundComment = comments.find((c) => c.id === id);
+  foundComment.comment = newCommentText;
+  res.redirect("/comments");
+});
+
 ///////
 app.post("/tacos", (req, res) => {
   const { meat, qty } = req.body;
