@@ -14,18 +14,22 @@ app.set("view engine", "ejs");
 
 const comments = [
   {
+    id: 1,
     username: "Todd",
     comment: "lol that is so funny",
   },
   {
+    id: 2,
     username: "Skyler",
     comment: "I like to go birdwatching with my dog",
   },
   {
+    id: 3,
     username: "Sk8erBoi",
     comment: "Plz delete your account, Todd",
   },
   {
+    id: 4,
     username: "onlysaywoof",
     comment: "woof woof woof",
   },
@@ -49,6 +53,12 @@ app.post("/comments", (req, res) => {
   comments.push({ username, comment });
   //res.send("IT Work"); // 이 상태로 전송했을때 새로고침을 하면 다시 post가 재 전송되서 중복이된다. redirect를 사용하자
   res.redirect("/comments"); // 데이터를 전송하고 지정한 path로 이동한다. 302
+});
+
+app.get("/comments/:id", (req, res) => {
+  const { id } = req.params;
+  const comment = comments.find((c) => c.id === parseInt(id));
+  res.render("comments/show", { comment });
 });
 
 ///////
