@@ -1,0 +1,24 @@
+맥 OS 버전
+
+사이트
+https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/
+
+1. HomeBrew 설치
+
+2. brew tap mongodb/brew 설치
+
+3. brew install mongodb-community@6.0
+
+// 버전이 바뀔수도있으니 공식 홈페이지를 참조하자.
+// 설치시간은 꽤 걸릴 수 있다.
+
+몽고디비는 백그라운드에서 실행된다.
+백그라운드 실행방법
+brew services start mongodb-community@6.0
+
+실행중지 방법
+brew services stop mongodb-community@6.0
+
+실행 방법 ====
+mongosh
+
