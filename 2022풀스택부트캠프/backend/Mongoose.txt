@@ -2,3 +2,23 @@ mongoose 설치
 
 1. npm init -y //패키치 설치
 2. npm i mongoose
+
+
+index.js 파일 참조.
+몽구스 설정
+몽구스 스케마 설정
+
+node 실행후 .load index.js 실행
+amadeus.save() 실행 // amadeus는 임의의 영화이름
+
+터미널 탭 추가후
+mongosh 실행.
+
+db.movies.find() 를해보면 데이터가 들어가있다.
+
+
+*노드에서 객체를 변경할 경우
+ex)
+amadeus.score = 9.5
+설정후 save를 해줘야 몽고에서 변경된다.
+amadeus.save()
