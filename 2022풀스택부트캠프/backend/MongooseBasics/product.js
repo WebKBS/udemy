@@ -18,7 +18,7 @@ const productSchema = new mongoose.Schema({
   price: {
     type: Number,
     required: true,
-    min: 0,
+    min: [0, "Price must be to positive ya dodo!"], // 에러시 에러메세지 표기 (커스텀 메세지)
   },
   onSale: {
     type: Boolean,
