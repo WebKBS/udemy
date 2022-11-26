@@ -62,3 +62,7 @@ Movie.findOneAndDelete({title: 'Alien'}).then(m => console.log(m))
 
 
 ******* find 메서드를 사용한 방법은 변경된 내역을 보여준다.
+
+
+몽구스 스키마 사용법
+https://mongoosejs.com/docs/guide.html

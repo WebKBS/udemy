@@ -13,15 +13,24 @@ const productSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    maxlength: 20,
   },
   price: {
     type: Number,
     required: true,
+    min: 0,
+  },
+  onSale: {
+    type: Boolean,
+    default: false,
   },
 }); // Schema를 정하지 않는 데이터는 나타나지않는다.
 
 const Product = mongoose.model("Product", productSchema);
-const bike = new Product({ name: "Mountain Bike", price: 599 });
+const bike = new Product({
+  name: "Bike Helmet From Helmets Maker ",
+  price: -29.5,
+});
 bike
   .save()
   .then((data) => {
