@@ -35,30 +35,21 @@ const productSchema = new mongoose.Schema({
       default: 0,
     },
   },
+  size: {
+    type: String,
+    enum: ["S", "M", "L"], // 여러개의 유효성 검사를 할때는 enum을 사용
+  },
 }); // Schema를 정하지 않는 데이터는 나타나지않는다.
 
 const Product = mongoose.model("Product", productSchema);
-// const bike = new Product({
-//   name: "Tire Pump",
-//   price: 19.5,
-//   categories: ["Cycling"],
-// });
-// bike
-//   .save()
-//   .then((data) => {
-//     console.log("Success!!");
-//     console.log(data);
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//     console.log("Error!!!!");
-//   });
-
-Product.findOneAndUpdate(
-  { name: "Tire Pump" },
-  { price: -19.99 },
-  { new: true, runValidators: true } // find메서드에서는 runValidators true를 넣어줘야 유효성 검사가 가능하다.
-)
+const bike = new Product({
+  name: "Cycling Jersey",
+  price: 28.5,
+  categories: ["Cycling"],
+  size: "XS",
+});
+bike
+  .save()
   .then((data) => {
     console.log("Success!!");
     console.log(data);
@@ -67,3 +58,17 @@ Product.findOneAndUpdate(
     console.log(error);
     console.log("Error!!!!");
   });
+
+// Product.findOneAndUpdate(
+//   { name: "Tire Pump" },
+//   { price: -19.99 },
+//   { new: true, runValidators: true } // find메서드에서는 runValidators true를 넣어줘야 유효성 검사가 가능하다.
+// )
+//   .then((data) => {
+//     console.log("Success!!");
+//     console.log(data);
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//     console.log("Error!!!!");
+//   });
