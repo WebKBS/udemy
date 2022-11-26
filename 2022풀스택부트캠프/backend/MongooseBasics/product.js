@@ -24,12 +24,24 @@ const productSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  categories: [String],
+  qty: {
+    online: {
+      type: Number,
+      default: 0,
+    },
+    inStore: {
+      type: Number,
+      default: 0,
+    },
+  },
 }); // Schema를 정하지 않는 데이터는 나타나지않는다.
 
 const Product = mongoose.model("Product", productSchema);
 const bike = new Product({
-  name: "Bike Helmet From Helmets Maker ",
-  price: -29.5,
+  name: "Bike Helmet",
+  price: 29.5,
+  categories: ["Cycling", "safety"],
 });
 bike
   .save()
