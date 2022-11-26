@@ -38,13 +38,27 @@ const productSchema = new mongoose.Schema({
 }); // Schema를 정하지 않는 데이터는 나타나지않는다.
 
 const Product = mongoose.model("Product", productSchema);
-const bike = new Product({
-  name: "Bike Helmet",
-  price: 29.5,
-  categories: ["Cycling", "safety"],
-});
-bike
-  .save()
+// const bike = new Product({
+//   name: "Tire Pump",
+//   price: 19.5,
+//   categories: ["Cycling"],
+// });
+// bike
+//   .save()
+//   .then((data) => {
+//     console.log("Success!!");
+//     console.log(data);
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//     console.log("Error!!!!");
+//   });
+
+Product.findOneAndUpdate(
+  { name: "Tire Pump" },
+  { price: -19.99 },
+  { new: true, runValidators: true } // find메서드에서는 runValidators true를 넣어줘야 유효성 검사가 가능하다.
+)
   .then((data) => {
     console.log("Success!!");
     console.log(data);
