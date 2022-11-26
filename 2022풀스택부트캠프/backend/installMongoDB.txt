@@ -80,3 +80,11 @@ db.이름.deleteOne({삭제할 객체}) // 삭제된 객체 전체가 삭제됨
 db.이름.deleteMany({삭제할 객체}) // 해당된 객체 모두를 지움
 
 db.이름.deleteMany({}) // 아무것도 선택하지 않으면, 모두 삭제된다.
+
+
+몽고디비 연산자
+https://www.mongodb.com/docs/manual/reference/operator/query/
+
+ex)
+db.inventory.find({'size.h': {$gt: 8}}) 
+$gt는 초과인 값을 찾는다.
