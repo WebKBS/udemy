@@ -14,6 +14,11 @@ amadeus.save() 실행 // amadeus는 임의의 영화이름
 터미널 탭 추가후
 mongosh 실행.
 
+show dbs 현재 데이터 저장소를 보는법.
+
+use 데이터베이스이름   --- 데이터베이스를 사용한다.
+
+
 db.movies.find() 를해보면 데이터가 들어가있다.
 
 
