@@ -22,3 +22,13 @@ ex)
 amadeus.score = 9.5
 설정후 save를 해줘야 몽고에서 변경된다.
 amadeus.save()
+
+
+
+///////////////////////
+node 터미널에서 사용해보기
+ex)
+Movie.find({}).then(data => console.log(data))
+Movie.find({rating: 'PG-13'}).then(data => console.log(data))
+Movie.find({year: {$gte: 2010}}).then(data => console.log(data))
+Movie.findOne({}).then(first => console.log(first)) // 가장 첫번째 정보 가져옴 
