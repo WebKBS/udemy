@@ -41,23 +41,50 @@ const productSchema = new mongoose.Schema({
   },
 }); // Schema를 정하지 않는 데이터는 나타나지않는다.
 
+productSchema.methods.greet = function () {
+  console.log("Hellooooo");
+  console.log(`- from ${this.name}`);
+};
+
+productSchema.methods.toggleOnSale = function () {
+  this.onSale = !this.onSale;
+  return this.save();
+};
+
+productSchema.methods.addCategory = function (newCat) {
+  this.categories.push(newCat);
+  return this.save();
+};
+
 const Product = mongoose.model("Product", productSchema);
-const bike = new Product({
-  name: "Cycling Jersey",
-  price: 28.5,
-  categories: ["Cycling"],
-  size: "XS",
-});
-bike
-  .save()
-  .then((data) => {
-    console.log("Success!!");
-    console.log(data);
-  })
-  .catch((error) => {
-    console.log(error);
-    console.log("Error!!!!");
-  });
+
+const findProduct = async () => {
+  const foundProduct = await Product.findOne({ name: "Mountain Bike" });
+  console.log(foundProduct);
+  await foundProduct.toggleOnSale();
+  console.log(foundProduct);
+  await foundProduct.addCategory("Outdoors");
+  console.log(foundProduct);
+};
+
+findProduct();
+
+// const bike = new Product({
+//   name: "Cycling Jersey",
+//   price: 28.5,
+//   categories: ["Cycling"],
+//   size: "S",
+// });
+// bike
+//   .save()
+//   .then((data) => {
+//     console.log("Success!!");
+//     console.log(data);
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//     console.log("Error!!!!");
+//   });
 
 // Product.findOneAndUpdate(
 //   { name: "Tire Pump" },
