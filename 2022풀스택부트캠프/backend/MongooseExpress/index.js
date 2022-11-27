@@ -2,11 +2,13 @@ const { equal } = require("assert");
 const express = require("express");
 const app = express();
 const path = require("path");
-const mongoose = require("mongoose");
 
 const mongoose = require("mongoose"); //27017 기본 포트
+
+const Product = require("./models/product");
+
 mongoose
-  .connect("mongodb://localhost:27017/shopApp")
+  .connect("mongodb://localhost:27017/farmStand")
   .then(() => {
     console.log("Mongo Connection Open");
   })
