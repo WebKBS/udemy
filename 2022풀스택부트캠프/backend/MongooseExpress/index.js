@@ -25,7 +25,11 @@ app.get("/products", async (req, res) => {
   res.render("products/index", { products }); // 랜더링을 위한 두번째 인수
 });
 
-
+app.get("/products/:id", async (req, res) => {
+  const { id } = req.params;
+  const product = await Product.findById(id);
+  res.render("products/show", { product });
+});
 
 app.listen(3000, () => {
   console.log("App is litening 3000");
