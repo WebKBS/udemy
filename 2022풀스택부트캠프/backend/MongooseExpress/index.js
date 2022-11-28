@@ -1,4 +1,3 @@
-const { equal } = require("assert");
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -20,9 +19,13 @@ mongoose
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-app.get("/dog", (req, res) => {
-  res.send("Helllllo");
+app.get("/products", async (req, res) => {
+  const products = await Product.find({});
+  //console.log(products);
+  res.render("products/index", { products }); // 랜더링을 위한 두번째 인수
 });
+
+
 
 app.listen(3000, () => {
   console.log("App is litening 3000");
