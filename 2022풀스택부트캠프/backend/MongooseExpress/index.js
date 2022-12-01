@@ -26,9 +26,17 @@ app.use(methodOverride("_method"));
 const categories = ["fruit", "vegetable", "dairy", "mushrooms", "fungi"];
 
 app.get("/products", async (req, res) => {
-  const products = await Product.find({});
+  const { category } = req.query;
+  if (category) {
+    const products = await Product.find({ category });
+    res.render("products/index", { products, category });
+  } else {
+    const products = await Product.find({});
+    res.render("products/index", { products, category: "All" });
+  }
+  //const products = await Product.find({});
   //console.log(products);
-  res.render("products/index", { products }); // 랜더링을 위한 두번째 인수
+  //res.render("products/index", { products }); // 랜더링을 위한 두번째 인수
 });
 
 app.get("/products/new", async (req, res) => {
