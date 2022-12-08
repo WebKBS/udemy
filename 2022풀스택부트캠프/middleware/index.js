@@ -22,6 +22,15 @@ app.use("/dogs", (req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+  //console.log(req.query);
+  const { password } = req.query;
+  if (password === "chickennugget") {
+    next();
+  }
+  res.send("Sorry You need a password");
+});
+
 // app.use((req, res) => {
 //   res.send("HI JACK My App.Use"); // 아무 주소나 쳐도 요청된다..
 // });
@@ -62,6 +71,12 @@ app.get("/", (req, res) => {
 app.get("/dogs", (req, res) => {
   console.log(`REQUEST DATE: ${req.requestTime}`);
   res.send("Woof Woof!");
+});
+
+app.get("/secret", (req, res) => {
+  res.send(
+    "My Secret Is : Sometimes I wear headphones in public so I dont to talk to talk to anyone"
+  );
 });
 
 // 이 요청은 아무 라우터가 없어서 url을 잘못 입력하면 어디든 나타난다. ex) 요청 실패 404페이지 만들때 사용할 수 있다.
