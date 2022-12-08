@@ -22,14 +22,14 @@ app.use("/dogs", (req, res, next) => {
   next();
 });
 
-app.use((req, res, next) => {
+const verifyPassword = (req, res, next) => {
   //console.log(req.query);
   const { password } = req.query;
   if (password === "chickennugget") {
     next();
   }
   res.send("Sorry You need a password");
-});
+};
 
 // app.use((req, res) => {
 //   res.send("HI JACK My App.Use"); // 아무 주소나 쳐도 요청된다..
@@ -73,9 +73,9 @@ app.get("/dogs", (req, res) => {
   res.send("Woof Woof!");
 });
 
-app.get("/secret", (req, res) => {
+app.get("/secret", verifyPassword, (req, res) => {
   res.send(
-    "My Secret Is : Sometimes I wear headphones in public so I dont to talk to talk to anyone"
+    "My Secret Is : Sometimes I wear headphones in public so I dont have to talk to talk to anyone"
   );
 });
 
