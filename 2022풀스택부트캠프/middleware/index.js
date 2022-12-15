@@ -4,6 +4,8 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 
+const AppError = require("./AppError");
+
 //morgan("tiny");
 
 //app.use(morgan("dev")); // 요청 응답을 받고 종료한 시간 및 요청상태 코드를 콘솔에 표시해준다.
@@ -28,8 +30,11 @@ const verifyPassword = (req, res, next) => {
   if (password === "chickennugget") {
     next();
   }
+
+  throw new AppError("password Required", 401);
   //res.send("Sorry You need a password");
-  throw new Error("Password required");
+  // res.status(401);
+  // throw new Error("Password required");
 };
 
 // app.use((req, res) => {
@@ -85,18 +90,28 @@ app.get("/secret", verifyPassword, (req, res) => {
   );
 });
 
+// 아무것도없는 admin 주소로 접속했을때 Error 처리, 커스텀 가능하다.
+app.get("/admin", (req, res) => {
+  throw new AppError("You are not admin");
+});
+
 // 이 요청은 아무 라우터가 없어서 url을 잘못 입력하면 어디든 나타난다. ex) 요청 실패 404페이지 만들때 사용할 수 있다.
 app.use((req, res) => {
   res.status(404).send("NOT FOUND");
 });
 
 // 에러 핸들링 하는 방법 파라미터 꼭 4개가 필요하다.
-app.use((err, req, res, next) => {
-  console.log("*******************");
-  console.log("*******Error*******");
-  console.log("*******************");
-  console.log(err); // 콘솔에서 어디에서 에러가 났는지 알수 있다.
-  res.status(500).send("Error!!!!!!");
+// app.use((err, req, res, next) => {
+//   console.log("*******************");
+//   console.log("*******Error*******");
+//   console.log("*******************");
+//   console.log(err); // 콘솔에서 어디에서 에러가 났는지 알수 있다.
+//   res.status(500).send("Error!!!!!!");
+// });
+
+app.use((err, req, res, send) => {
+  const { status = 500, message = "Something Went Wrong" } = err;
+  res.status(status).send(message);
 });
 
 app.listen(3000, () => {
