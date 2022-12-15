@@ -28,7 +28,8 @@ const verifyPassword = (req, res, next) => {
   if (password === "chickennugget") {
     next();
   }
-  res.send("Sorry You need a password");
+  //res.send("Sorry You need a password");
+  throw new Error("Password required");
 };
 
 // app.use((req, res) => {
@@ -68,6 +69,11 @@ app.get("/", (req, res) => {
   res.send("Home Page");
 });
 
+//https://expressjs.com/ko/guide/error-handling.html 오류 처리 방법 공식문서
+app.get("/error", (req, res) => {
+  chicken.fly();
+});
+
 app.get("/dogs", (req, res) => {
   console.log(`REQUEST DATE: ${req.requestTime}`);
   res.send("Woof Woof!");
@@ -82,6 +88,15 @@ app.get("/secret", verifyPassword, (req, res) => {
 // 이 요청은 아무 라우터가 없어서 url을 잘못 입력하면 어디든 나타난다. ex) 요청 실패 404페이지 만들때 사용할 수 있다.
 app.use((req, res) => {
   res.status(404).send("NOT FOUND");
+});
+
+// 에러 핸들링 하는 방법 파라미터 꼭 4개가 필요하다.
+app.use((err, req, res, next) => {
+  console.log("*******************");
+  console.log("*******Error*******");
+  console.log("*******************");
+  console.log(err); // 콘솔에서 어디에서 에러가 났는지 알수 있다.
+  res.status(500).send("Error!!!!!!");
 });
 
 app.listen(3000, () => {
