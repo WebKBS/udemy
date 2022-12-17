@@ -26,55 +26,76 @@ app.use(methodOverride("_method"));
 
 const categories = ["fruit", "vegetable", "dairy", "mushrooms", "fungi"];
 
-app.get("/products", async (req, res) => {
-  const { category } = req.query;
-  if (category) {
-    const products = await Product.find({ category });
-    res.render("products/index", { products, category });
-  } else {
-    const products = await Product.find({});
-    res.render("products/index", { products, category: "All" });
+app.get("/products", async (req, res, next) => {
+  try {
+    const { category } = req.query;
+    if (category) {
+      const products = await Product.find({ category });
+      res.render("products/index", { products, category });
+    } else {
+      const products = await Product.find({});
+      res.render("products/index", { products, category: "All" });
+    }
+    //const products = await Product.find({});
+    //console.log(products);
+    //res.render("products/index", { products }); // 랜더링을 위한 두번째 인수
+  } catch (err) {
+    next(err);
   }
-  //const products = await Product.find({});
-  //console.log(products);
-  //res.render("products/index", { products }); // 랜더링을 위한 두번째 인수
 });
 
 app.get("/products/new", async (req, res) => {
   res.render("products/new", { categories });
 });
 
-app.post("/products", async (req, res) => {
-  const newProduct = new Product(req.body);
-  await newProduct.save();
-  res.redirect(`/products/${newProduct._id}`); // 리다이랙트 요청한 페이지로 바로이동
+app.post("/products", async (req, res, next) => {
+  try {
+    //try catch로 비동기 에러 잡기
+    const newProduct = new Product(req.body);
+    await newProduct.save();
+    res.redirect(`/products/${newProduct._id}`); // 리다이랙트 요청한 페이지로 바로이동
+  } catch (err) {
+    next(err);
+  }
 });
 
 app.get("/products/:id", async (req, res, next) => {
-  const { id } = req.params;
-  const product = await Product.findById(id);
-  if (!product) {
-    return next(new AppError("Product Not Found", 404)); // 비동기 에러는 next()를 사용해서 전달해야함. return을 사용해야 다음 코드를 실행하지 않는다
+  try {
+    const { id } = req.params;
+    const product = await Product.findById(id);
+    if (!product) {
+      throw new AppError("Product Not Found", 404);
+    }
+    res.render("products/show", { product });
+  } catch (err) {
+    next(err);
   }
-  res.render("products/show", { product });
 });
 
 app.get("/products/:id/edit", async (req, res, next) => {
-  const { id } = req.params;
-  const product = await Product.findById(id);
-  if (!product) {
-    return next(new AppError("Product Not Found", 404)); // 비동기 에러는 next()를 사용해서 전달해야함. return을 사용해야 다음 코드를 실행하지 않는다
+  try {
+    const { id } = req.params;
+    const product = await Product.findById(id);
+    if (!product) {
+      throw new AppError("Product Not Found", 404);
+    }
+    res.render("products/edit", { product, categories });
+  } catch (err) {
+    next(err);
   }
-  res.render("products/edit", { product, categories });
 });
 
-app.put("/products/:id", async (req, res) => {
-  const { id } = req.params;
-  const product = await Product.findByIdAndUpdate(id, req.body, {
-    runValidators: true,
-    new: true,
-  });
-  res.redirect(`/products/${product._id}`);
+app.put("/products/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.findByIdAndUpdate(id, req.body, {
+      runValidators: true,
+      new: true,
+    });
+    res.redirect(`/products/${product._id}`);
+  } catch (err) {
+    next(err);
+  }
 });
 
 app.delete("/products/:id", async (req, res) => {
