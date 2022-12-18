@@ -26,8 +26,9 @@ app.use(methodOverride("_method"));
 
 const categories = ["fruit", "vegetable", "dairy", "mushrooms", "fungi"];
 
-app.get("/products", async (req, res, next) => {
-  try {
+app.get(
+  "/products",
+  wrapAsync(async (req, res, next) => {
     const { category } = req.query;
     if (category) {
       const products = await Product.find({ category });
@@ -38,65 +39,64 @@ app.get("/products", async (req, res, next) => {
     }
     //const products = await Product.find({});
     //console.log(products);
-    //res.render("products/index", { products }); // 랜더링을 위한 두번째 인수
-  } catch (err) {
-    next(err);
-  }
-});
+  })
+);
 
 app.get("/products/new", async (req, res) => {
   res.render("products/new", { categories });
 });
 
-app.post("/products", async (req, res, next) => {
-  try {
+app.post(
+  "/products",
+  wrapAsync(async (req, res, next) => {
     //try catch로 비동기 에러 잡기
     const newProduct = new Product(req.body);
     await newProduct.save();
     res.redirect(`/products/${newProduct._id}`); // 리다이랙트 요청한 페이지로 바로이동
-  } catch (err) {
-    next(err);
-  }
-});
+  })
+);
 
-app.get("/products/:id", async (req, res, next) => {
-  try {
+function wrapAsync(fn) {
+  return function (req, res, next) {
+    fn(req, res, next).catch((err) => next(err));
+  };
+}
+
+app.get(
+  "/products/:id",
+  wrapAsync(async (req, res, next) => {
     const { id } = req.params;
     const product = await Product.findById(id);
     if (!product) {
       throw new AppError("Product Not Found", 404);
     }
     res.render("products/show", { product });
-  } catch (err) {
-    next(err);
-  }
-});
+  })
+);
 
-app.get("/products/:id/edit", async (req, res, next) => {
-  try {
+app.get(
+  "/products/:id/edit",
+  wrapAsync(async (req, res, next) => {
     const { id } = req.params;
     const product = await Product.findById(id);
     if (!product) {
       throw new AppError("Product Not Found", 404);
     }
     res.render("products/edit", { product, categories });
-  } catch (err) {
-    next(err);
-  }
-});
+  })
+);
 
-app.put("/products/:id", async (req, res, next) => {
-  try {
+app.put(
+  "/products/:id",
+  wrapAsync(async (req, res, next) => {
     const { id } = req.params;
     const product = await Product.findByIdAndUpdate(id, req.body, {
       runValidators: true,
       new: true,
     });
     res.redirect(`/products/${product._id}`);
-  } catch (err) {
-    next(err);
-  }
-});
+  })
+);
 
 app.delete("/products/:id", async (req, res) => {
   const { id } = req.params;
