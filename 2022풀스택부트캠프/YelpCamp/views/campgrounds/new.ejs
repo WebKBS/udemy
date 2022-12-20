@@ -2,7 +2,7 @@
 <div class="row">
   <h1 class="text-center">NEW Campground</h1>
   <div class="col-6 offset-3">
-    <form action="/campgrounds" method="POST">
+    <form action="/campgrounds" method="POST" novalidate class="validated-from">
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
         <input
@@ -10,7 +10,10 @@
           class="form-control"
           id="title"
           name="campground[title]"
+          required
         />
+        <div class="valid-feedback">Looks Good!</div>
+        <!-- 유효성 텍스트 반대 invalid-feedback -->
       </div>
       <div class="mb-3">
         <label for="location" class="form-label">Location</label>
@@ -19,6 +22,7 @@
           class="form-control"
           id="location"
           name="campground[location]"
+          required
         />
       </div>
       <div class="mb-3">
@@ -28,7 +32,10 @@
           class="form-control"
           id="image"
           name="campground[image]"
+          required
         />
+        <div class="valid-feedback">Looks Good!</div>
+        <!-- 유효성 텍스트 반대 invalid-feedback -->
       </div>
       <div class="mb-3">
         <label for="price" class="form-label">Campground Price</label>
@@ -42,7 +49,10 @@
             aria-describedby="price-label"
             id="price"
             name="campground[price]"
+            required
           />
+          <div class="valid-feedback">Looks Good!</div>
+          <!-- 유효성 텍스트 반대 invalid-feedback -->
         </div>
       </div>
       <div class="mb-3">
@@ -52,7 +62,10 @@
           class="form-control"
           id="description"
           name="campground[description]"
+          required
         ></textarea>
+        <div class="invalid-feedback">Looks Good!</div>
+        <!-- 유효성 텍스트 반대 invalid-feedback -->
       </div>
       <div class="mb-3">
         <button class="btn btn-success">Add campground</button>
@@ -61,3 +74,28 @@
     <a href="/campgrounds">back to campground</a>
   </div>
 </div>
+
+<script>
+  (() => {
+    "use strict";
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll(".validated-from");
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach((form) => {
+      form.addEventListener(
+        "submit",
+        (event) => {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  })();
+</script>

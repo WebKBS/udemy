@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: [true, "에러가 발생했습니다."], // 커스텀 에러 메세지
   },
 
   price: {

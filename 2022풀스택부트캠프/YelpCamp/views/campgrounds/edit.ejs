@@ -5,6 +5,8 @@
     <form
       action="/campgrounds/<%= campground._id %>?_method=PUT "
       method="POST"
+      novalidate
+      class="validated-from"
     >
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
@@ -14,7 +16,10 @@
           id="title"
           name="campground[title]"
           value="<%= campground.title %>"
+          required
         />
+        <div class="valid-feedback">Looks Good!</div>
+        <!-- 유효성 텍스트 반대 invalid-feedback -->
       </div>
       <div class="mb-3">
         <label for="location" class="form-label">Location</label>
@@ -24,7 +29,10 @@
           id="location"
           name="campground[location]"
           value="<%= campground.location%> "
+          required
         />
+        <div class="invalid-feedback">Looks Good!</div>
+        <!-- 유효성 텍스트 반대 invalid-feedback -->
       </div>
       <div class="mb-3">
         <label for="image" class="form-label">Image Url</label>
@@ -34,7 +42,10 @@
           id="image"
           name="campground[image]"
           value="<%= campground.image%> "
+          required
         />
+        <div class="valid-feedback">Looks Good!</div>
+        <!-- 유효성 텍스트 반대 invalid-feedback -->
       </div>
       <div class="mb-3">
         <label for="price" class="form-label">Campground Price</label>
@@ -49,7 +60,10 @@
             id="price"
             name="campground[price]"
             value="<%= campground.price%> "
+            required
           />
+          <div class="valid-feedback">Looks Good!</div>
+          <!-- 유효성 텍스트 반대 invalid-feedback -->
         </div>
       </div>
       <div class="mb-3">
@@ -59,9 +73,12 @@
           class="form-control"
           id="description"
           name="campground[description]"
+          required
         >
 <%= campground.description %> </textarea
         >
+        <div class="valid-feedback">Looks Good!</div>
+        <!-- 유효성 텍스트 반대 invalid-feedback -->
       </div>
       <div class="mb-3">
         <button class="btn btn-info">Update campground</button>
