@@ -3,8 +3,10 @@ const path = require("path");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const catchAsync = require("./utils/catchAsync");
+const EspressError = require("./utils/expressError");
 const methodOverride = require("method-override");
 const Campground = require("./models/campground");
+const ExpressError = require("./utils/expressError");
 
 mongoose.connect("mongodb://localhost:27017/yelp-camp", {
   // useNewUrlParser: true,
@@ -49,6 +51,8 @@ app.get(
 app.post(
   "/campgrounds",
   catchAsync(async (req, res, next) => {
+    if (!req.body.campground)
+      throw new ExpressError("Invalid Campground Data", 404); // 따로 에러메세지 지정하기, 포스트맨에서 확인가능
     const campground = new Campground(req.body.campground);
     await campground.save();
     res.redirect(`/campgrounds/${campground._id}`);
@@ -91,7 +95,15 @@ app.delete(
   })
 );
 
+// all은 어느곳에서든 에러가 났을때 전체 처리한다.
+app.all("*", (req, res, next) => {
+  next(new ExpressError("Page not found", 404));
+  //res.send("ALL!!!!!! 404!!!");
+});
+
 app.use((err, req, res, next) => {
+  const { statusCode = 500, message = "Something went wrong" } = err;
+  res.status(statusCode).send(message);
   res.send("Oh no Error!!!!!!!!!");
 });
 
