@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
+const Joi = require("joi");
 const catchAsync = require("./utils/catchAsync");
 const EspressError = require("./utils/expressError");
 const methodOverride = require("method-override");
@@ -51,8 +52,25 @@ app.get(
 app.post(
   "/campgrounds",
   catchAsync(async (req, res, next) => {
-    if (!req.body.campground)
-      throw new ExpressError("Invalid Campground Data", 404); // 따로 에러메세지 지정하기, 포스트맨에서 확인가능
+    // if (!req.body.campground)
+    //   throw new ExpressError("Invalid Campground Data", 404); // 따로 에러메세지 지정하기, 포스트맨에서 확인가능
+    const campgroundSchema = Joi.object({
+      campground: Joi.object({
+        title: Joi.string().required(),
+        price: Joi.number().required().min(0),
+        image: Joi.string().required(),
+        location: Joi.string().required(),
+        description: Joi.string().required(),
+      }).required(),
+    });
+
+    const { error } = campgroundSchema.validate(req.body);
+
+    if (error) {
+      const msg = error.details.map((el) => el.message).join(",");
+      throw new ExpressError(msg, 400);
+    }
+    console.log(result);
     const campground = new Campground(req.body.campground);
     await campground.save();
     res.redirect(`/campgrounds/${campground._id}`);
@@ -108,6 +126,6 @@ app.use((err, req, res, next) => {
   res.send("Oh no Error!!!!!!!!!");
 });
 
-app.listen(4000, () => {
-  console.log("serving on port 4000");
+app.listen(3000, () => {
+  console.log("serving on port 3000");
 });
