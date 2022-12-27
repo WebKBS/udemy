@@ -51,4 +51,10 @@ const addProduct = async () => {
   await farm.save();
   console.log(farm);
 };
-addProduct();
+//addProduct();
+
+Farm.findOne({ name: "Full Belly Farms" })
+  .populate("products") // populate 사용법 예시
+  .then((farm) => {
+    console.log(farm);
+  });
