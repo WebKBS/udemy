@@ -6,9 +6,10 @@ const methodOverride = require("method-override");
 const mongoose = require("mongoose"); //27017 기본 포트
 
 const Product = require("./models/product");
+const Farm = require("./models/farm");
 
 mongoose
-  .connect("mongodb://localhost:27017/farmStand")
+  .connect("mongodb://localhost:27017/farmStandTake2")
   .then(() => {
     console.log("Mongo Connection Open");
   })
@@ -23,6 +24,23 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
+//Farm Routes
+app.get("/farms", async (req, res) => {
+  const farms = await Farm.find({});
+  res.render("farms/index", { farms });
+});
+
+app.get("/farms/new", (req, res) => {
+  res.render("farms/new");
+});
+
+app.post("/farms", async (req, res) => {
+  const farm = new Farm(req.body);
+  await farm.save();
+  res.redirect("/farms");
+});
+
+//products Route
 const categories = ["fruit", "vegetable", "dairy", "mushrooms", "fungi"];
 
 app.get("/products", async (req, res) => {
