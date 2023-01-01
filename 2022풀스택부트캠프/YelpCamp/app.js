@@ -8,6 +8,7 @@ const EspressError = require("./utils/expressError");
 const methodOverride = require("method-override");
 const Campground = require("./models/campground");
 const ExpressError = require("./utils/expressError");
+const Review = require("./models/review");
 
 mongoose.connect("mongodb://localhost:27017/yelp-camp", {
   // useNewUrlParser: true,
@@ -111,6 +112,18 @@ app.delete(
   })
 );
 
+app.post(
+  "/campgrounds/:id/reviews",
+  catchAsync(async (req, res) => {
+    const campground = await Campground.findById(req.params.id);
+    const review = new Review(req.body.review);
+    campground.reviews.push(review);
+    await review.save();
+    await campground.save();
+    res.redirect(`/campgrounds/${campground._id}`);
+  })
+);
+
 // all은 어느곳에서든 에러가 났을때 전체 처리한다.
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page not found", 404));
@@ -124,6 +137,6 @@ app.use((err, req, res, next) => {
   res.send("Oh no Error!!!!!!!!!");
 });
 
-app.listen(3000, () => {
-  console.log("serving on port 3000");
+app.listen(4000, () => {
+  console.log("serving on port 4000");
 });
