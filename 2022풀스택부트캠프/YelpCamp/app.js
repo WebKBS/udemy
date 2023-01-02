@@ -139,6 +139,16 @@ app.post(
   })
 );
 
+app.delete(
+  "/campgrounds/:id/reviews/:reviewId",
+  catchAsync(async (req, res) => {
+    const { id, reviewId } = req.params;
+    await Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/campgrounds/${id}`);
+  })
+);
+
 // all은 어느곳에서든 에러가 났을때 전체 처리한다.
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page not found", 404));
