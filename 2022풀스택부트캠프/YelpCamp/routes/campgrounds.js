@@ -38,7 +38,7 @@ router.post(
   catchAsync(async (req, res, next) => {
     // if (!req.body.campground)
     //   throw new ExpressError("Invalid Campground Data", 404); // 따로 에러메세지 지정하기, 포스트맨에서 확인가능
-
+    req.flash("success", "Successfully made a new campground");
     const campground = new Campground(req.body.campground);
     await campground.save();
     res.redirect(`/campgrounds/${campground._id}`);
@@ -72,6 +72,7 @@ router.put(
     const campground = await Campground.findByIdAndUpdate(id, {
       ...req.body.campground,
     });
+    req.flash("success", "Successfully update campground");
     res.redirect(`/campgrounds/${campground._id}`);
   })
 );
@@ -81,6 +82,7 @@ router.delete(
   catchAsync(async (req, res) => {
     const { id } = req.params;
     await Campground.findByIdAndDelete(id);
+    req.flash("success", "Successfully Deleted Campground");
     res.redirect("/campgrounds");
   })
 );

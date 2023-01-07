@@ -3,6 +3,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const session = require("express-session");
+const flash = require("connect-flash");
 
 const ExpressError = require("./utils/expressError");
 const methodOverride = require("method-override");
@@ -44,6 +45,13 @@ const sessionConfig = {
   },
 };
 app.use(session(sessionConfig));
+app.use(flash());
+
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("Error");
+  next();
+});
 
 app.use("/campgrounds", campgrounds);
 app.use("/campgrounds/:id/reviews", reviews);
@@ -62,7 +70,7 @@ app.use((err, req, res, next) => {
   const { statusCode = 500 } = err;
   if (!err.message) err.message = "On no Something Went wrong";
   res.status(statusCode).render("error", { err });
-  res.send("Oh no Error!!!!!!!!!");
+  //res.send("Oh no Error!!!!!!!!!");
 });
 
 app.listen(4000, () => {
