@@ -57,11 +57,17 @@ app.post("/login", async (req, res) => {
   }
 });
 
+app.post("/logout", (req, res) => {
+  //req.session.user_id = null; // 세션을 null로 만들어서 로그아웃
+  req.session.destroy(); // 세션 전체를 파괴해 로그아웃
+  res.redirect("/login");
+});
+
 app.get("/secret", (req, res) => {
   if (!req.session.user_id) {
-    res.redirect("/login");
+    return res.redirect("/login");
   }
-  res.send("This is Secret!!!");
+  res.render("secret");
 });
 
 app.listen(3000, () => {
