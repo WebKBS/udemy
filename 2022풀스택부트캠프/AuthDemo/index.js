@@ -21,6 +21,13 @@ app.set("views", "views");
 app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: "notagoodsession" }));
 
+const requireLogin = (req, res, next) => {
+  if (!req.session.user_id) {
+    return res.redirect("/login");
+  }
+  next();
+};
+
 app.get("/", (req, res) => {
   res.send("This is homePage");
 });
@@ -63,11 +70,13 @@ app.post("/logout", (req, res) => {
   res.redirect("/login");
 });
 
-app.get("/secret", (req, res) => {
-  if (!req.session.user_id) {
-    return res.redirect("/login");
-  }
+// requireLogin을 통과해야(login을해야) 넘어갈 수 있다.
+app.get("/secret", requireLogin, (req, res) => {
   res.render("secret");
+});
+
+app.get("/topsecret", requireLogin, (req, res) => {
+  res.send("Top secret");
 });
 
 app.listen(3000, () => {
