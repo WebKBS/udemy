@@ -18,7 +18,7 @@ router.post(
       req.login(registeredUser, (err) => {
         if (err) return next(err);
         req.flash("success", "Welcome to Yelp Camp!");
-        res.redirect("/campgrounds  ");
+        res.redirect("/campgrounds");
       });
     } catch (e) {
       req.flash("Error", e.message);
@@ -38,7 +38,9 @@ router.post(
   }),
   (req, res) => {
     req.flash("success", "Welcome Back!");
-    res.redirect("/campgrounds");
+    const redirectUrl = req.session.returnTo || "/campgrounds";
+    delete req.session.returnTo;
+    res.redirect(redirectUrl);
   }
 );
 
