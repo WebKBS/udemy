@@ -11,6 +11,7 @@
         <li class="list-group-item">작가: <%= campground.author.username %></li>
         <li class="list-group-item">you $<%= campground.price %></li>
       </ul>
+      <% if(currentUser && campground.author.equals(currentUser._id)){ %>
       <div class="card-body">
         <a
           class="card-link btn btn-primary"
@@ -25,6 +26,7 @@
           <button class="btn btn-danger">DELETE</button>
         </form>
       </div>
+      <% } %>
       <div class="card-footer text-muted">
         <a href="/campgrounds">All campground</a>
       </div>
