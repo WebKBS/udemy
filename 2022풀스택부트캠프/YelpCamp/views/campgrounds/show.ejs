@@ -12,6 +12,7 @@
         <li class="list-group-item">you $<%= campground.price %></li>
       </ul>
       <% if(currentUser && campground.author.equals(currentUser._id)){ %>
+      <!-- 유저와 유저 아이디가 일치할때 보이기 -->
       <div class="card-body">
         <a
           class="card-link btn btn-primary"
