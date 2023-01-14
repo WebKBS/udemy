@@ -45,6 +45,7 @@ router.post(
     //   throw new ExpressError("Invalid Campground Data", 404); // 따로 에러메세지 지정하기, 포스트맨에서 확인가능
     req.flash("success", "Successfully made a new campground");
     const campground = new Campground(req.body.campground);
+    campground.author = req.user._id;
     await campground.save();
     res.redirect(`/campgrounds/${campground._id}`);
   })
