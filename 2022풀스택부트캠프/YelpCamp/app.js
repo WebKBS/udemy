@@ -57,6 +57,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
+  res.locals.currentUser = req.user; // 로그인 접속하면 로그인과 회원가입을 없애고 로그아웃만 남긴다.
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("Error");
   next();
