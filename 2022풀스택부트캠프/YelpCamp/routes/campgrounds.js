@@ -18,12 +18,24 @@ const validateCampground = (req, res, next) => {
   }
 };
 
+const isAuthor = async (req, res, next) => {
+  const { id } = req.params;
+  const campground = await Campground.findById(id);
+
+  // 사용자가 아니면 접속할수 없다.
+  if (!campground.author.equals(req.user._id)) {
+    req.flash("Error", "사용자가 아닙니다!!!!");
+    return res.redirect(`/campgrounds/${id}`);
+  }
+  next();
+};
+
 router.get(
   "/",
   isLoggedIn,
   catchAsync(async (req, res) => {
-    const campground = await Campground.find({});
-    res.render("campgrounds/index", { campground });
+    const campgrounds = await Campground.find({});
+    res.render("campgrounds/index", { campgrounds });
   })
 );
 
@@ -69,6 +81,7 @@ router.get(
 router.get(
   "/:id/edit",
   isLoggedIn,
+  isAuthor,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const campground = await Campground.findById(id);
@@ -77,11 +90,6 @@ router.get(
       return res.redirect("/campgrounds");
     }
 
-    // 사용자가 아니면 접속할수 없다.
-    if (!campground.author.equals(req.user._id)) {
-      req.flash("Error", "사용자가 아닙니다!!!!");
-      return res.redirect(`/campgrounds/${id}`);
-    }
     res.render("campgrounds/edit", { campground });
   })
 );
@@ -89,17 +97,12 @@ router.get(
 router.put(
   "/:id",
   isLoggedIn,
+  isAuthor,
   validateCampground,
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    const campground = await Campground.findById(id);
 
-    // 사용자가 아니면 접속할수 없다.
-    if (!campground.author.equals(req.user._id)) {
-      req.flash("Error", "사용자가 아닙니다!!!!");
-      return res.redirect(`/campgrounds/${id}`);
-    }
-    const camp = await Campground.findByIdAndUpdate(id, {
+    const campground = await Campground.findByIdAndUpdate(id, {
       ...req.body.campground,
     });
     req.flash("success", "Successfully update campground");
@@ -110,6 +113,7 @@ router.put(
 router.delete(
   "/:id",
   isLoggedIn,
+  isAuthor,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const campground = await Campground.findById(id);
