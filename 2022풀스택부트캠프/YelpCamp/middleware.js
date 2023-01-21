@@ -1,6 +1,7 @@
 const ExpressError = require("./utils/expressError");
 const { campgroundSchema, reviewSchema } = require("./schemas");
 const Campground = require("./models/campground");
+const Review = require("./models/review");
 
 module.exports.isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
@@ -30,6 +31,18 @@ module.exports.isAuthor = async (req, res, next) => {
 
   // 사용자가 아니면 접속할수 없다.
   if (!campground.author.equals(req.user._id)) {
+    req.flash("Error", "사용자가 아닙니다!!!!");
+    return res.redirect(`/campgrounds/${id}`);
+  }
+  next();
+};
+
+module.exports.isReviewAuthor = async (req, res, next) => {
+  const { id, reviewId } = req.params;
+  const review = await Review.findById(reviewId);
+
+  // 사용자가 아니면 접속할수 없다.
+  if (!review.author.equals(req.user._id)) {
     req.flash("Error", "사용자가 아닙니다!!!!");
     return res.redirect(`/campgrounds/${id}`);
   }

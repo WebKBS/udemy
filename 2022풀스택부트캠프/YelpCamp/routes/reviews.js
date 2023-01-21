@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router({ mergeParams: true }); // 라우터 호출이 안뜰때 파라미터를 합성시킨다 *** 중요!!
 const Review = require("../models/review");
 const Campground = require("../models/campground");
-const { validateReview, isLoggedIn } = require("../middleware");
+const { validateReview, isLoggedIn, isReviewAuthor } = require("../middleware");
 
 const catchAsync = require("../utils/catchAsync");
 
@@ -24,6 +24,8 @@ router.post(
 
 router.delete(
   "/:reviewId",
+  isLoggedIn,
+  isReviewAuthor,
   catchAsync(async (req, res) => {
     const { id, reviewId } = req.params;
     await Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
