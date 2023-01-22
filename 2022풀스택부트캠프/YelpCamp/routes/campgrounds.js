@@ -4,7 +4,8 @@ const campgrounds = require("../controllers/campgrounds");
 const catchAsync = require("../utils/catchAsync");
 const { isLoggedIn, isAuthor, validateCampground } = require("../middleware");
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+const { storage } = require("../cloudinary/index");
+const upload = multer({ storage });
 
 const Campground = require("../models/campground");
 
@@ -16,8 +17,10 @@ router
   //   validateCampground,
   //   catchAsync(campgrounds.createCampground)
   // );
-  .post(upload.array("image"), (req, res) => { // single은 파일 하나일때, array는 파일 여러개일때
+  .post(upload.array("image"), (req, res) => {
+    // single은 파일 하나일때, array는 파일 여러개일때
     console.log(req.body, req.file);
+    res.send("Ok");
   });
 
 // :id 보다 아래 있으면 안된다. 순서가 먼저 있어야 한다.
