@@ -19,7 +19,7 @@ router
   // );
   .post(upload.array("image"), (req, res) => {
     // single은 파일 하나일때, array는 파일 여러개일때
-    console.log(req.body, req.file);
+    console.log(req.body, req.files);
     res.send("Ok");
   });
 
