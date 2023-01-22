@@ -2,7 +2,13 @@
 <div class="row">
   <h1 class="text-center">NEW Campground</h1>
   <div class="col-6 offset-3">
-    <form action="/campgrounds" method="POST" novalidate class="validated-form">
+    <form
+      action="/campgrounds"
+      method="POST"
+      novalidate
+      class="validated-form"
+      enctype="multipart/form-data"
+    >
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
         <input
@@ -25,7 +31,8 @@
           required
         />
       </div>
-      <div class="mb-3">
+      <input type="file" name="image" id="" />
+      <!-- <div class="mb-3">
         <label for="image" class="form-label">Image Url</label>
         <input
           type="text"
@@ -35,8 +42,7 @@
           required
         />
         <div class="valid-feedback">Looks Good!</div>
-        <!-- 유효성 텍스트 반대 invalid-feedback -->
-      </div>
+      </div> -->
       <div class="mb-3">
         <label for="price" class="form-label">Campground Price</label>
         <div class="input-group">
