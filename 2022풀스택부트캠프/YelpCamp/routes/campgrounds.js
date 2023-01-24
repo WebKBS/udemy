@@ -12,16 +12,17 @@ const Campground = require("../models/campground");
 router
   .route("/")
   .get(catchAsync(campgrounds.index))
-  // .post(
-  //   isLoggedIn,
-  //   validateCampground,
-  //   catchAsync(campgrounds.createCampground)
-  // );
-  .post(upload.array("image"), (req, res) => {
-    // single은 파일 하나일때, array는 파일 여러개일때
-    console.log(req.body, req.files);
-    res.send("Ok");
-  });
+  .post(
+    isLoggedIn,
+    upload.array("image"),
+    validateCampground,
+    catchAsync(campgrounds.createCampground)
+  );
+// .post(upload.array("image"), (req, res) => {
+//   // single은 파일 하나일때, array는 파일 여러개일때
+//   console.log(req.body, req.files);
+//   res.send("Ok");
+// });
 
 // :id 보다 아래 있으면 안된다. 순서가 먼저 있어야 한다.
 router.get("/new", isLoggedIn, campgrounds.renderNewForm);

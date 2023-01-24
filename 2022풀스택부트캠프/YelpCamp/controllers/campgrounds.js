@@ -12,10 +12,16 @@ module.exports.renderNewForm = async (req, res) => {
 module.exports.createCampground = async (req, res, next) => {
   // if (!req.body.campground)
   //   throw new ExpressError("Invalid Campground Data", 404); // 따로 에러메세지 지정하기, 포스트맨에서 확인가능
-  req.flash("success", "Successfully made a new campground");
+
   const campground = new Campground(req.body.campground);
+  campground.images = req.files.map((f) => ({
+    url: f.path,
+    filename: f.filename,
+  }));
   campground.author = req.user._id;
   await campground.save();
+  console.log(campground);
+  req.flash("success", "Successfully made a new campground");
   res.redirect(`/campgrounds/${campground._id}`);
 };
 
