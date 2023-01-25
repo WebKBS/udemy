@@ -35,16 +35,8 @@
         <!-- 유효성 텍스트 반대 invalid-feedback -->
       </div>
       <div class="mb-3">
-        <label for="image" class="form-label">Image Url</label>
-        <input
-          type="text"
-          class="form-control"
-          id="image"
-          name="campground[image]"
-          value="<%= campground.image%> "
-          required
-        />
-        <div class="valid-feedback">Looks Good!</div>
+        <label for="image" class="form-label">Add Images</label>
+        <input type="file" name="image" id="image" multiple />
         <!-- 유효성 텍스트 반대 invalid-feedback -->
       </div>
       <div class="mb-3">
