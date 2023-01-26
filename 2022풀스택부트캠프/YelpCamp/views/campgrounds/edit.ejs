@@ -3,11 +3,13 @@
   <h1 class="text-center">Edit Campground</h1>
   <div class="col-6 offset-3">
     <form
-      action="/campgrounds/<%= campground._id %>?_method=PUT "
+      action="/campgrounds/<%= campground._id %>?_method=PUT"
       method="POST"
       novalidate
       class="validated-form"
+      enctype="multipart/form-data"
     >
+      <!-- enctype="multipart/form-data" 무조건 넣어줘야함. -->
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
         <input
