@@ -7,11 +7,10 @@
     <div id="campgroundCarousel" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <% campground.images.forEach((img, idx) => {%>
-
         <div class="carousel-item <%= idx === 0 ? 'active' : '' %>">
           <img src="<%= img.url %>" class="d-block w-100" alt="" />
         </div>
-        <%}); %>
+        <%}) %>
       </div>
       <% if(campground.images.length > 1) {%>
       <button
@@ -174,7 +173,7 @@
 </div>
 
 <script>
-  const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
-  const campground = <%- JSON.stringify(campground) %>;
+  const mapToken = "<%-process.env.MAPBOX_TOKEN%>";
+  const campground = <%-JSON.stringify(campground)%>;
 </script>
 <script src="/javascripts/showPageMap.js"></script>
