@@ -1,38 +1,39 @@
 <% layout('layouts/boilerplate') %>
 <div class="row">
   <h1 class="text-center">NEW Campground</h1>
-  <div class="col-6 offset-3">
-    <form
-      action="/campgrounds"
-      method="POST"
-      novalidate
-      class="validated-form"
-      enctype="multipart/form-data"
-    >
-      <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
-        <input
-          type="text"
-          class="form-control"
-          id="title"
-          name="campground[title]"
-          required
-        />
-        <div class="valid-feedback">Looks Good!</div>
-        <!-- 유효성 텍스트 반대 invalid-feedback -->
-      </div>
-      <div class="mb-3">
-        <label for="location" class="form-label">Location</label>
-        <input
-          type="text"
-          class="form-control"
-          id="location"
-          name="campground[location]"
-          required
-        />
-      </div>
+  <div class="col-md-6 offset-md-3">
+    <div class="card-body">
+      <form
+        action="/campgrounds"
+        method="POST"
+        novalidate
+        class="validated-form"
+        enctype="multipart/form-data"
+      >
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            name="campground[title]"
+            required
+          />
+          <div class="valid-feedback">Looks Good!</div>
+          <!-- 유효성 텍스트 반대 invalid-feedback -->
+        </div>
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label>
+          <input
+            type="text"
+            class="form-control"
+            id="location"
+            name="campground[location]"
+            required
+          />
+        </div>
 
-      <!-- <div class="mb-3">
+        <!-- <div class="mb-3">
         <label for="image" class="form-label">Image Url</label>
         <input
           type="text"
@@ -43,51 +44,52 @@
         />
         <div class="valid-feedback">Looks Good!</div>
       </div> -->
-      <div class="mb-3">
-        <label for="price" class="form-label">Campground Price</label>
-        <div class="input-group">
-          <span class="input-group-text" id="price-label">@</span>
-          <input
+        <div class="mb-3">
+          <label for="price" class="form-label">Campground Price</label>
+          <div class="input-group">
+            <span class="input-group-text" id="price-label">@</span>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="0"
+              aria-label="price-label"
+              aria-describedby="price-label"
+              id="price"
+              name="campground[price]"
+              required
+            />
+            <div class="valid-feedback">Looks Good!</div>
+            <!-- 유효성 텍스트 반대 invalid-feedback -->
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea
             type="text"
             class="form-control"
-            placeholder="0"
-            aria-label="price-label"
-            aria-describedby="price-label"
-            id="price"
-            name="campground[price]"
+            id="description"
+            name="campground[description]"
             required
-          />
-          <div class="valid-feedback">Looks Good!</div>
+          ></textarea>
+          <div class="invalid-feedback">Looks Good!</div>
           <!-- 유효성 텍스트 반대 invalid-feedback -->
         </div>
-      </div>
-      <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea
-          type="text"
-          class="form-control"
-          id="description"
-          name="campground[description]"
-          required
-        ></textarea>
-        <div class="invalid-feedback">Looks Good!</div>
-        <!-- 유효성 텍스트 반대 invalid-feedback -->
-      </div>
-      <div class="mb-3">
-        <label for="image" class="form-label">Upload Images</label>
-        <input
-          class="form-control"
-          type="file"
-          id="image"
-          name="image"
-          multiple
-        />
-      </div>
-      <div class="mb-3">
-        <button class="btn btn-success">Add campground</button>
-      </div>
-    </form>
-    <a href="/campgrounds">back to campground</a>
+        <div class="mb-3">
+          <label for="image" class="form-label">Upload Images</label>
+          <input
+            class="form-control"
+            type="file"
+            id="image"
+            name="image"
+            multiple
+          />
+        </div>
+        <div class="mb-3">
+          <button class="btn btn-success">Add campground</button>
+        </div>
+      </form>
+      <a href="/campgrounds">back to campground</a>
+    </div>
   </div>
 </div>
 
