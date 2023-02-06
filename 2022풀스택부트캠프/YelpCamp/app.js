@@ -20,9 +20,11 @@ const helmet = require("helmet");
 const usersRoutes = require("./routes/users");
 const campgroundsRoutes = require("./routes/campgrounds");
 const reviewsRoutes = require("./routes/reviews");
+//const dbUrl = process.env.DB_URL;
 
 const mongoSanitize = require("express-mongo-sanitize");
 
+//"mongodb://localhost:27017/yelp-camp"
 mongoose.connect("mongodb://localhost:27017/yelp-camp", {
   // useNewUrlParser: true,
   // useCreateIndex: true,
