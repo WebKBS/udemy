@@ -19,7 +19,8 @@ const User = require("./models/user");
 const usersRoutes = require("./routes/users");
 const campgroundsRoutes = require("./routes/campgrounds");
 const reviewsRoutes = require("./routes/reviews");
-const { addAbortSignal } = require("stream");
+
+const mongoSanitize = require("express-mongo-sanitize");
 
 mongoose.connect("mongodb://localhost:27017/yelp-camp", {
   // useNewUrlParser: true,
@@ -43,6 +44,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true })); // url 인코드
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public"))); // 등록된 폴더 js파일을 불러올수 있음
+app.use(mongoSanitize());
 
 const sessionConfig = {
   secret: "thisshouldbesecret",
