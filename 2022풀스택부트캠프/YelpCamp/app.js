@@ -51,7 +51,8 @@ const sessionConfig = {
   resave: false,
   saveUninitialized: true,
   cookie: {
-    httpOnly: true,
+    httpOnly: true, // http라서 자바스크립트만으로는 사용할수 없다.
+    //secure: true, // http2 의 상태에서만 로그인 가능하다.
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7,
   },
