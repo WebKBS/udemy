@@ -15,6 +15,7 @@ const methodOverride = require("method-override");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
+const helmet = require("helmet");
 
 const usersRoutes = require("./routes/users");
 const campgroundsRoutes = require("./routes/campgrounds");
@@ -59,6 +60,13 @@ const sessionConfig = {
 };
 app.use(session(sessionConfig));
 app.use(flash());
+
+// app.use(
+//   helmet({
+//     contentSecurityPolicy: false,
+//   })
+// );
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
